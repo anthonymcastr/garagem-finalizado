@@ -6,7 +6,7 @@ import { authMiddleware } from '../middlewares/auth';
 const router = Router();
 const prisma = new PrismaClient();
 
-// Backup de dados
+
 router.get('/', authMiddleware, async (req, res) => {
   try {
     const usuarios = await prisma.usuario.findMany();
@@ -33,12 +33,12 @@ router.get('/', authMiddleware, async (req, res) => {
   }
 });
 
-// Restore de dados
+
 router.post('/', authMiddleware, async (req, res) => {
   const dados = req.body;
 
   try {
-    // Limpar dados antigos
+    
     await prisma.pagamento.deleteMany();
     await prisma.aluguel.deleteMany();
     await prisma.box.deleteMany();
@@ -46,7 +46,7 @@ router.post('/', authMiddleware, async (req, res) => {
     await prisma.log.deleteMany();
     await prisma.usuario.deleteMany();
 
-    // Recriar os dados (na ordem certa para não quebrar as foreign keys)
+    
     await prisma.usuario.createMany({ data: dados.usuarios });
     await prisma.cliente.createMany({ data: dados.clientes });
     await prisma.box.createMany({ data: dados.boxes });

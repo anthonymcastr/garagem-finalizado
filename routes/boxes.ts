@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
   }
 })
 
-// Criar novo box
+
 router.post("/", async (req, res) => {
   const valida = boxSchema.safeParse(req.body)
   if (!valida.success) {

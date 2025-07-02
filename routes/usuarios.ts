@@ -8,13 +8,13 @@ const router = Router();
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || 'segredo123';
 
-// Função para validar a senha
+
 function validarSenha(senha: string): boolean {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
   return regex.test(senha);
 }
 
-// Criar usuário (aceita campo 'nivel')
+
 router.post('/', async (req, res) => {
   const { nome, email, senha, nivel = 1 } = req.body;
 
@@ -36,13 +36,13 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Listar usuários
+
 router.get('/', async (req, res) => {
   const usuarios = await prisma.usuario.findMany();
   res.json(usuarios);
 });
 
-// Login
+
 router.post('/login', async (req, res) => {
   const { email, senha } = req.body;
 
@@ -68,7 +68,7 @@ router.post('/login', async (req, res) => {
   res.json({ token, mensagem: saudacao });
 });
 
-// Trocar senha
+
 router.post('/trocar-senha', authMiddleware, async (req, res) => {
   const { senhaAtual, novaSenha } = req.body;
 
